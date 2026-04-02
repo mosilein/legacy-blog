@@ -1,17 +1,3 @@
-const observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    const slug = entry.target.id
-    const tocEntryElements = document.querySelectorAll(`a[data-for="${slug}"]`)
-    const windowHeight = entry.rootBounds?.height
-    if (windowHeight && tocEntryElements.length > 0) {
-      if (entry.boundingClientRect.y < windowHeight) {
-        tocEntryElements.forEach((tocEntryElement) => tocEntryElement.classList.add("in-view"))
-      } else {
-        tocEntryElements.forEach((tocEntryElement) => tocEntryElement.classList.remove("in-view"))
-      }
-    }
-  }
-})
 
 function toggleToc(this: HTMLElement) {
   this.classList.toggle("collapsed")
@@ -24,6 +10,14 @@ function toggleToc(this: HTMLElement) {
   content.classList.toggle("collapsed")
 }
 
+function highlightHeading(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.classList.remove("toc-highlight")
+  void el.offsetWidth // force reflow to restart animation
+  el.classList.add("toc-highlight")
+}
+
 function setupToc() {
   for (const toc of document.getElementsByClassName("toc")) {
     const button = toc.querySelector(".toc-header")
@@ -32,13 +26,20 @@ function setupToc() {
     button.addEventListener("click", toggleToc)
     window.addCleanup(() => button.removeEventListener("click", toggleToc))
   }
+
+  for (const link of document.querySelectorAll<HTMLAnchorElement>(".toc-content a[href^='#']")) {
+    const handler = () => {
+      const id = link.getAttribute("href")!.slice(1)
+      document.querySelectorAll(".toc-content a.in-view").forEach((el) => el.classList.remove("in-view"))
+      link.classList.add("in-view")
+setTimeout(() => highlightHeading(id), 50)
+    }
+    link.addEventListener("click", handler)
+    window.addCleanup(() => link.removeEventListener("click", handler))
+  }
 }
 
 document.addEventListener("nav", () => {
   setupToc()
 
-  // update toc entry highlighting
-  observer.disconnect()
-  const headers = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
-  headers.forEach((header) => observer.observe(header))
 })

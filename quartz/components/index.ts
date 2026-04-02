@@ -23,6 +23,8 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
+import LatestNote from "./LatestNote"
+import LatestNoteTOC from "./LatestNoteTOC"
 
 export {
   ArticleTitle,
@@ -50,4 +52,6 @@ export {
   Comments,
   Flex,
   ConditionalRender,
+  LatestNote,
+  LatestNoteTOC,
 }

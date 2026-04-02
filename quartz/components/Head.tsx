@@ -50,6 +50,8 @@ export default (() => {
             )}
           </>
         )}
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300&f[]=gambetta@300,400,700&display=swap" />
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

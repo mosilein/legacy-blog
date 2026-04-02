@@ -1,13 +1,20 @@
 .content-meta {
   margin-top: 0;
-  color: var(--darkgray);
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  color: #9C8B74;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 
   &[show-comma="true"] {
     > *:not(:last-child) {
-      margin-right: 8px;
-
       &::after {
-        content: ",";
+        content: "·";
+        margin-left: 0.4rem;
+        color: #DAC5A7;
       }
     }
   }

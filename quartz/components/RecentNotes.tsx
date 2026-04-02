@@ -52,6 +52,9 @@ export default ((userOpts?: Partial<Options>) => {
                         {title}
                       </a>
                     </h3>
+                    {page.frontmatter?.description && (
+                      <p class="article-description">{page.frontmatter.description}</p>
+                    )}
                   </div>
                   {page.dates && (
                     <p class="meta">
