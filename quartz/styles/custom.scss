@@ -168,6 +168,7 @@ ul.toc-content.overflow li.depth-5 {
     }
 
     .mobile-explorer-close {
+      display: block;
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -201,6 +202,10 @@ ul.toc-content.overflow li.depth-5 {
       transform: translateX(calc(-50% - 100vw)) !important;
     }
   }
+}
+
+.mobile-explorer-close {
+  display: none;
 }
 
 .graph > .graph-outer {
