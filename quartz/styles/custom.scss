@@ -10,9 +10,11 @@ h2#graph-links, h2#graph-links ~ * {
   display: none;
 }
 
-.center > * {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+@media all and (min-width: 800px) {
+  .center > * {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
 }
 
 .graph {
@@ -120,6 +122,87 @@ ul.toc-content.overflow li.depth-5 {
   outline: none !important;
 }
 
+@media all and (max-width: 800px) {
+  .search {
+    display: none !important;
+  }
+  .darkmode {
+    display: none !important;
+  }
+  .spacer {
+    display: none !important;
+  }
+  .sidebar.left {
+    flex-direction: column !important;
+    align-items: center !important;
+    position: relative !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      height: 100%;
+      z-index: -1;
+      border-bottom: 1px solid #9C8B74;
+    }
+  }
+  :root[saved-theme="light"] .sidebar.left::before,
+  :root:not([saved-theme="dark"]) .sidebar.left::before {
+    background-color: #faf8f8;
+  }
+  :root[saved-theme="dark"] .sidebar.left::before {
+    background-color: #161618;
+  }
+  .explorer {
+    order: 1 !important;
+    align-self: center !important;
+    margin: 0 !important;
+    padding-top: 0.75rem;
+    padding-bottom: 0;
+
+    &:not(.collapsed) .mobile-explorer:not(.hide-until-loaded) {
+      visibility: hidden;
+    }
+
+    .mobile-explorer-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      z-index: 101;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--darkgray);
+      padding: 0.5rem;
+    }
+
+    .explorer-content {
+      width: 100vw !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      padding: 2rem 1.5rem !important;
+      box-sizing: border-box;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+
+      ul {
+        text-align: center;
+      }
+
+      .folder-container {
+        justify-content: center;
+      }
+    }
+
+    &.collapsed .explorer-content {
+      transform: translateX(calc(-50% - 100vw)) !important;
+    }
+  }
+}
+
 .graph > .graph-outer {
   border-color: #DAC5A7 !important;
 }
@@ -168,8 +251,12 @@ h4.toc-highlight, h5.toc-highlight, h6.toc-highlight {
   }
   .sidebar.left {
     background-color: #faf8f8;
-    box-shadow: -100vw 0 0 100vw #faf8f8;
-    border-right: 1px solid #9C8B74;
+  }
+  @media all and (min-width: 800px) {
+    .sidebar.left {
+      box-shadow: -100vw 0 0 100vw #faf8f8;
+      border-right: 1px solid #9C8B74;
+    }
   }
 }
 
@@ -179,8 +266,12 @@ h4.toc-highlight, h5.toc-highlight, h6.toc-highlight {
   }
   .sidebar.left {
     background-color: #161618;
-    box-shadow: -100vw 0 0 100vw #161618;
-    border-right: 1px solid #9C8B74;
+  }
+  @media all and (min-width: 800px) {
+    .sidebar.left {
+      box-shadow: -100vw 0 0 100vw #161618;
+      border-right: 1px solid #9C8B74;
+    }
   }
 }
 
@@ -195,8 +286,10 @@ h4.toc-highlight, h5.toc-highlight, h6.toc-highlight {
   margin-top: 2rem !important;
 }
 
-.sidebar.left {
-  padding-top: 2rem !important;
+@media all and (min-width: 800px) {
+  .sidebar.left {
+    padding-top: 2rem !important;
+  }
 }
 
 body[data-slug="index"] .latest-note {
@@ -206,9 +299,13 @@ body[data-slug="index"] .latest-note {
 .page-title {
   font-family: "Satoshi", sans-serif;
   font-weight: 300;
-  letter-spacing: 10px;
+  letter-spacing: 4px;
   font-feature-settings: "ss01";
   margin: 0;
+
+  @media all and (min-width: 800px) {
+    letter-spacing: 10px;
+  }
 
   a {
     color: #DAC5A7 !important;
@@ -226,18 +323,24 @@ body[data-slug="index"] .latest-note {
   font-weight: 400;
   font-style: normal;
   color: #939393;
-  font-size: 1.15rem;
+  font-size: 1rem;
   letter-spacing: 0.05em;
   margin-top: 0.5rem;
-  white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  text-align: center;
+
+  @media all and (min-width: 800px) {
+    font-size: 1.15rem;
+    gap: 0.75rem;
+  }
 
   &::before,
   &::after {
     content: "";
     flex: 1;
+    min-width: 1rem;
     height: 1px;
     background: linear-gradient(to var(--dir, right), transparent, #DAC5A7 50%, transparent);
   }
