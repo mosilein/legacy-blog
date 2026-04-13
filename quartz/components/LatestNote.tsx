@@ -2,14 +2,31 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import { htmlToJsx } from "../util/jsx"
 import { byDateAndAlphabetical } from "./PageList"
 import { resolveRelative, FullSlug } from "../util/path"
-import { Date, getDate } from "./Date"
+import { Date as DateDisplay, getDate } from "./Date"
 import readingTime from "reading-time"
 import { i18n } from "../i18n"
 
+function getFrontmatterDate(fm: Record<string, unknown> | undefined): Date | null {
+  if (!fm) return null
+  const raw = fm["date"] ?? fm["Time"] ?? fm["created"] ?? fm["created_at"]
+  if (!raw) return null
+  const d = new Date(raw as string)
+  return isNaN(d.getTime()) ? null : d
+}
+
 const LatestNote: QuartzComponent = ({ allFiles, fileData, cfg }: QuartzComponentProps) => {
   const latest = allFiles
-    .filter((f) => !f.slug?.endsWith("index") && f.slug?.startsWith("articles/"))
-    .sort(byDateAndAlphabetical(cfg))
+    .filter((f) =>
+      !f.slug?.endsWith("index") &&
+      f.slug !== "index" &&
+      f.frontmatter?.draft !== true &&
+      getFrontmatterDate(f.frontmatter) !== null
+    )
+    .sort((a, b) => {
+      const dateA = getFrontmatterDate(a.frontmatter)!.getTime()
+      const dateB = getFrontmatterDate(b.frontmatter)!.getTime()
+      return dateB - dateA
+    })
     .at(0)
 
   if (!latest || !latest.htmlAst) return null
@@ -36,7 +53,7 @@ const LatestNote: QuartzComponent = ({ allFiles, fileData, cfg }: QuartzComponen
         <a href={href} class="internal">{title}</a>
       </h2>
       <p class="latest-note-meta">
-        {latest.dates && <Date date={getDate(cfg, latest)!} locale={cfg.locale} />}
+        {latest.dates && <DateDisplay date={getDate(cfg, latest)!} locale={cfg.locale} />}
         {latest.dates && readingTimeText && <span class="meta-sep">·</span>}
         {readingTimeText && <span>{readingTimeText}</span>}
       </p>
