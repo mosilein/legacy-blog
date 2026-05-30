@@ -45,7 +45,10 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Explorer(),
   ],
   right: [
-    Component.Graph(),
+    Component.ConditionalRender({
+      component: Component.Graph(),
+      condition: (page) => page.fileData.slug !== "index",
+    }),
     Component.DesktopOnly(Component.ConditionalRender({
       component: Component.LatestNoteTOC(),
       condition: (page) => page.fileData.slug === "index",

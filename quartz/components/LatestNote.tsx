@@ -1,6 +1,4 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { htmlToJsx } from "../util/jsx"
-import { byDateAndAlphabetical } from "./PageList"
 import { resolveRelative, FullSlug } from "../util/path"
 import { Date as DateDisplay, getDate } from "./Date"
 import readingTime from "reading-time"
@@ -32,7 +30,6 @@ const LatestNote: QuartzComponent = ({ allFiles, fileData, cfg }: QuartzComponen
   if (!latest || !latest.htmlAst) return null
 
   const title = latest.frontmatter?.title ?? latest.slug
-  const content = htmlToJsx(latest.filePath!, latest.htmlAst)
   const href = resolveRelative(fileData.slug!, latest.slug!)
   const tags = latest.frontmatter?.tags ?? []
 
@@ -68,9 +65,6 @@ const LatestNote: QuartzComponent = ({ allFiles, fileData, cfg }: QuartzComponen
           ))}
         </ul>
       )}
-      <div class="latest-note-content popover-hint">
-        {content}
-      </div>
     </div>
   )
 }
